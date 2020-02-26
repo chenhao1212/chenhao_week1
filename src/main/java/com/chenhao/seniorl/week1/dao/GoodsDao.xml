@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间的值为dao层接口的权限定名 -->
+<mapper namespace="com.chenhao.seniorl.week1.dao.GoodsDao">
+	<select id="queryAllGoods" resultType="Goods">
+		select * from goods g join type t on g.tid=t.tid join brand b on g.bid=b.bid
+		<where>
+			<if test="gname!=null and gname!=''">
+				and gname like '%${gname}%'
+			</if>
+			<if test="gEnglishName!=null and gEnglishName!=''">
+				and gEnglishName like '%${gEnglishName}%'
+			</if>
+			<if test="tid!=null and tid>0">
+				and tid = #{tid}
+			</if>
+			<if test="bid!=null and bid>0">
+				and bid = #{bid}
+			</if>
+			<if test="lable!=null and lable!=''">
+				and lable like '%${lable}%'
+			</if>
+			<if test="price1!=null and price1>=0">
+				and price >= #{price1}
+			</if>
+			<if test="price2!=null">
+				and price &lt;=price2
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectAllType" resultType="Type">
+		select * from type
+	</select>
+</mapper>
